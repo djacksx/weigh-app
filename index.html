@@ -6,149 +6,210 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Weigh">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
 <title>Weigh</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f7f7f7;
+    --bg3: #f0f0f0;
+    --border: #e0e0e0;
+    --border2: #d0d0d0;
+    --border3: #cccccc;
+    --ink: #111111;
+    --ink2: #444444;
+    --ink3: #555555;
+    --muted: #888888;
+    --muted2: #aaaaaa;
+    --accent: #000000;
+    --accent-fg: #ffffff;
+    --btn-disabled: #cccccc;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111111;
+      --bg2: #1c1c1e;
+      --bg3: #2c2c2e;
+      --border: #2c2c2e;
+      --border2: #3a3a3c;
+      --border3: #48484a;
+      --ink: #f2f2f7;
+      --ink2: #ebebf5cc;
+      --ink3: #aeaeb2;
+      --muted: #636366;
+      --muted2: #48484a;
+      --accent: #f2f2f7;
+      --accent-fg: #111111;
+      --btn-disabled: #3a3a3c;
+    }
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; background: #fff; color: #111; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+  html, body { height: 100%; background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; overflow-x: hidden; }
   .screen { display: none; min-height: 100dvh; flex-direction: column; }
   .screen.active { display: flex; }
 
-  /* INTRO */
-  #screen-intro {
-    padding: 0; background: #fff;
-    justify-content: flex-start;
-  }
-  .intro-top {
-    padding: 56px 24px 32px;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  .app-name {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 22px; font-weight: 700; color: #000;
-    margin-bottom: 4px; letter-spacing: -0.01em;
-  }
-  .app-name-sub {
-    font-size: 13px; color: #999; line-height: 1.4;
-  }
-  .intro-form { padding: 28px 24px; flex: 1; display: flex; flex-direction: column; gap: 0; }
-  .field-label {
-    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
-    font-weight: 600; color: #555; margin-bottom: 10px; display: block;
-  }
+  /* ── SCREEN 1: INTRO ── */
+  #screen-intro { padding: 0; background: var(--bg); justify-content: flex-start; }
+  .intro-top { padding: 56px 24px 28px; border-bottom: 1px solid var(--border); }
+  .app-name { font-family: Georgia, serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .app-name-sub { font-size: 13px; color: var(--muted); }
+  .intro-form { padding: 28px 24px; flex: 1; display: flex; flex-direction: column; }
+  .field-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--ink3); margin-bottom: 10px; display: block; }
   textarea.dilemma {
-    width: 100%; background: #fff; border: none; border-bottom: 1.5px solid #ccc;
-    padding: 0 0 12px; color: #111; font-family: Georgia, serif;
-    font-size: 17px; line-height: 1.6; resize: none; outline: none;
-    min-height: 80px; transition: border-color 0.2s;
+    width: 100%; background: var(--bg); border: none; border-bottom: 1.5px solid var(--border3);
+    padding: 0 0 12px; color: var(--ink); font-family: Georgia, serif; font-size: 17px;
+    line-height: 1.6; resize: none; outline: none; min-height: 80px; transition: border-color 0.2s;
   }
-  textarea.dilemma:focus { border-bottom-color: #000; }
-  textarea.dilemma::placeholder { color: #ccc; font-style: italic; }
-
+  textarea.dilemma:focus { border-bottom-color: var(--ink); }
+  textarea.dilemma::placeholder { color: var(--muted); font-style: italic; }
   .btn-start {
-    margin-top: 28px; align-self: flex-start;
-    padding: 10px 22px; background: #000; color: #fff; border: none;
-    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
-    letter-spacing: 0.04em; cursor: pointer; border-radius: 4px; transition: opacity 0.2s;
+    margin-top: 28px; align-self: flex-start; padding: 10px 22px;
+    background: var(--accent); color: var(--accent-fg); border: none; font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer;
+    border-radius: 4px; transition: opacity 0.2s;
   }
-  .btn-start:disabled { background: #ccc; cursor: default; }
+  .btn-start:disabled { background: var(--btn-disabled); color: var(--muted); cursor: default; }
   .btn-start:not(:disabled):active { opacity: 0.75; }
 
-  /* ANALYSIS */
-  #screen-analysis { flex-direction: column; background: #fff; }
-
+  /* ── SCREEN 2: ANALYSIS ── */
+  #screen-analysis { flex-direction: column; background: var(--bg); }
   .a-header {
-    background: #fff; border-bottom: 2px solid #000;
-    padding: 10px 14px; display: flex; align-items: center;
-    gap: 10px; position: sticky; top: 0; z-index: 10;
+    background: var(--bg); border-bottom: 2px solid var(--ink); padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 10;
   }
   .btn-back {
-    background: none; border: 1px solid #555; color: #111;
-    padding: 4px 10px; font-size: 11px; letter-spacing: 0.05em; cursor: pointer;
-    font-family: 'Inter', sans-serif; white-space: nowrap;
+    background: none; border: 1px solid var(--ink3); color: var(--ink); padding: 4px 10px;
+    font-size: 11px; letter-spacing: 0.05em; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap;
   }
   .a-header-inner { flex: 1; min-width: 0; }
-  .a-eyebrow { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #999; }
-  .a-dilemma { font-family: Georgia, serif; font-style: italic; font-size: 13px; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-  .tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #d0d0d0; }
-  .tab-btn {
-    padding: 12px 0; background: #f7f7f7; border: none;
-    border-bottom: 3px solid transparent; font-family: Georgia, serif;
-    font-size: 15px; font-weight: 700; color: #888; cursor: pointer; transition: all 0.15s;
+  .a-eyebrow { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .a-dilemma { font-family: Georgia, serif; font-style: italic; font-size: 13px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .btn-decide {
+    background: var(--accent); border: none; color: var(--accent-fg); padding: 6px 13px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer;
+    font-family: 'Inter', sans-serif; white-space: nowrap; border-radius: 4px;
   }
-  .tab-btn:first-child { border-right: 1px solid #d0d0d0; }
-  .tab-btn.active { background: #fff; color: #000; border-bottom-color: #000; }
 
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border2); }
+  .tab-btn {
+    padding: 12px 0; background: var(--bg2); border: none; border-bottom: 3px solid transparent;
+    font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: var(--muted); cursor: pointer; transition: all 0.15s;
+  }
+  .tab-btn:first-child { border-right: 1px solid var(--border2); }
+  .tab-btn.active { background: var(--bg); color: var(--ink); border-bottom-color: var(--ink); }
   .panel { display: none; }
   .panel.active { display: block; }
+  .a-body { flex: 1; overflow-y: auto; padding-bottom: 160px; }
 
-  .a-body { flex: 1; overflow-y: auto; padding-bottom: 100px; }
-
-  .section-block { padding: 18px 16px; border-bottom: 1px solid #d0d0d0; }
-  .section-heading {
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    font-weight: 700; color: #888; margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .section-heading::after { content: ''; flex: 1; height: 1px; background: #d0d0d0; }
-
-  .considerations { background: #f7f7f7; border-left: 3px solid #555; padding: 10px 14px; margin-bottom: 14px; }
-  .c-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: #888; margin-bottom: 8px; }
-  .c-q { font-family: Georgia, serif; font-style: italic; font-size: 13px; color: #555; line-height: 1.5; padding: 5px 0; border-bottom: 1px dotted #ccc; }
+  .section-block { padding: 18px 16px; border-bottom: 1px solid var(--border2); }
+  .section-heading { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+  .considerations { background: var(--bg2); border-left: 3px solid var(--ink3); padding: 10px 14px; margin-bottom: 14px; }
+  .c-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+  .c-q { font-family: Georgia, serif; font-style: italic; font-size: 13px; color: var(--ink3); line-height: 1.5; padding: 5px 0; border-bottom: 1px dotted var(--border2); }
   .c-q:last-child { border-bottom: none; }
 
   .item-list { list-style: none; margin-bottom: 10px; }
-  .item-chip { display: flex; align-items: flex-start; gap: 8px; padding: 12px 0; border-bottom: 1px dotted #d0d0d0; font-size: 14px; line-height: 1.5; color: #111; flex-wrap: wrap; }
+  .item-chip { display: flex; align-items: flex-start; gap: 8px; padding: 12px 0; border-bottom: 1px dotted var(--border2); font-size: 14px; line-height: 1.5; color: var(--ink); flex-wrap: wrap; }
   .item-chip:last-child { border-bottom: none; }
-  .item-dash { color: #aaa; flex-shrink: 0; margin-top: 2px; font-size: 12px; }
+  .item-dash { color: var(--muted2); flex-shrink: 0; margin-top: 2px; font-size: 12px; }
   .item-text { flex: 1; font-family: Georgia, serif; min-width: 0; }
-  .btn-del { background: none; border: none; color: #ccc; cursor: pointer; font-size: 11px; flex-shrink: 0; padding: 0; line-height: 1; margin-top: 3px; transition: color 0.15s; }
-  .btn-del:hover { color: #111; }
+  .btn-del { background: none; border: none; color: var(--muted2); cursor: pointer; font-size: 11px; flex-shrink: 0; padding: 0; line-height: 1; margin-top: 3px; transition: color 0.15s; }
+  .btn-del:hover { color: var(--ink); }
   .weight-row { width: 100%; display: flex; gap: 6px; padding-left: 18px; margin-top: 6px; }
-  .weight-btn {
-    font-size: 10px; font-family: 'Inter', sans-serif; font-weight: 600;
-    letter-spacing: 0.06em; padding: 3px 9px; border: 1px solid #ccc;
-    background: #fff; color: #aaa; cursor: pointer; border-radius: 20px;
-    transition: all 0.15s;
-  }
-  .weight-btn.active-low  { border-color: #aaa; background: #f0f0f0; color: #444; }
-  .weight-btn.active-med  { border-color: #555; background: #555; color: #fff; }
-  .weight-btn.active-high { border-color: #000; background: #000; color: #fff; }
+  .weight-btn { font-size: 10px; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: 0.06em; padding: 3px 9px; border: 1px solid var(--border3); background: var(--bg); color: var(--muted); cursor: pointer; border-radius: 20px; transition: all 0.15s; }
+  .weight-btn.active-low  { border-color: var(--ink3); background: var(--bg3); color: var(--ink); }
+  .weight-btn.active-med  { border-color: var(--ink3); background: var(--ink3); color: var(--bg); }
+  .weight-btn.active-high { border-color: var(--ink); background: var(--ink); color: var(--bg); }
 
-  .add-row { display: flex; border: 1px solid #555; }
-  .add-input { flex: 1; border: none; padding: 9px 12px; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: #111; background: #fff; outline: none; min-width: 0; }
-  .add-input::placeholder { color: #aaa; }
-  .add-btn { background: #000; border: none; color: #fff; width: 38px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.15s; }
+  .add-row { display: flex; border: 1px solid var(--ink3); }
+  .add-input { flex: 1; border: none; padding: 9px 12px; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--ink); background: var(--bg); outline: none; min-width: 0; }
+  .add-input::placeholder { color: var(--muted); }
+  .add-btn { background: var(--accent); border: none; color: var(--accent-fg); width: 38px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.15s; }
   .add-btn:active { opacity: 0.7; }
 
-  .notes-section { padding: 16px; border-top: 2px solid #000; }
-  .notes-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: #888; margin-bottom: 8px; }
-  textarea.notes {
-    width: 100%; background: #f7f7f7; border: 1px solid #555;
-    padding: 10px 12px; color: #111; font-family: Georgia, serif;
-    font-style: italic; font-size: 14px; line-height: 1.55; resize: none; outline: none; min-height: 80px;
-  }
-  textarea.notes:focus { border-color: #000; background: #fff; }
-  textarea.notes::placeholder { color: #aaa; }
+  .notes-section { padding: 16px; border-top: 2px solid var(--ink); }
+  .notes-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+  textarea.notes { width: 100%; background: var(--bg2); border: 1px solid var(--ink3); padding: 10px 12px; color: var(--ink); font-family: Georgia, serif; font-style: italic; font-size: 14px; line-height: 1.55; resize: none; outline: none; min-height: 80px; }
+  textarea.notes:focus { border-color: var(--ink); background: var(--bg); }
+  textarea.notes::placeholder { color: var(--muted); }
 
+  /* verdict + tips bar */
   .verdict-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: #fff; border-top: 2px solid #000;
-    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-    z-index: 20;
+    position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg);
+    border-top: 2px solid var(--ink); z-index: 20; padding: 10px 16px 0;
   }
-  .balance-track { height: 5px; background: #f0f0f0; border: 1px solid #d0d0d0; position: relative; overflow: hidden; margin-bottom: 6px; }
-  .balance-fill { position: absolute; top: 0; bottom: 0; background: #000; transition: all 0.4s ease; }
-  .verdict-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
-  .verdict-side { color: #888; letter-spacing: 0.05em; }
-  .verdict-text { font-weight: 700; color: #111; letter-spacing: 0.1em; text-transform: uppercase; font-size: 11px; }
+  .balance-track { height: 5px; background: var(--bg3); border: 1px solid var(--border2); position: relative; overflow: hidden; margin-bottom: 6px; }
+  .balance-fill { position: absolute; top: 0; bottom: 0; background: var(--ink); transition: all 0.4s ease; }
+  .verdict-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-bottom: 10px; }
+  .verdict-side { color: var(--muted); letter-spacing: 0.05em; }
+  .verdict-text { font-weight: 700; color: var(--ink); letter-spacing: 0.1em; text-transform: uppercase; font-size: 11px; }
+
+  /* tips drawer */
+  .tips-drawer { overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
+  .tips-drawer.open { max-height: 240px; }
+  .tips-inner {
+    border-top: 1px solid var(--border); padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .tips-heading { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+  .tip-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; line-height: 1.5; color: var(--ink2); }
+  .tip-dot { flex-shrink: 0; color: var(--muted); margin-top: 1px; }
+  .tip-text { font-family: Georgia, serif; font-style: italic; }
+  .tips-cta {
+    margin-top: 8px; align-self: flex-start; padding: 7px 16px;
+    background: var(--accent); color: var(--accent-fg); border: none; font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer;
+    border-radius: 4px; transition: opacity 0.2s;
+  }
+  .tips-cta:active { opacity: 0.75; }
+  .no-tips-pad { padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+
+  /* ── SCREEN 3: OUTCOME ── */
+  #screen-outcome { padding: 0; background: var(--bg); justify-content: flex-start; }
+  .o-header {
+    background: var(--bg); border-bottom: 2px solid var(--ink); padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 10;
+  }
+  .o-body { flex: 1; overflow-y: auto; padding: 28px 24px; display: flex; flex-direction: column; gap: 24px; }
+  .o-decision-summary { background: var(--bg2); border-left: 3px solid var(--ink); padding: 12px 16px; }
+  .o-ds-label { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .o-ds-text { font-family: Georgia, serif; font-size: 14px; color: var(--ink); line-height: 1.5; }
+
+  .outcome-choice-row { display: flex; gap: 8px; }
+  .outcome-btn {
+    flex: 1; padding: 12px 8px; border: 1.5px solid var(--border3); background: var(--bg);
+    font-family: Georgia, serif; font-size: 14px; color: var(--muted); cursor: pointer;
+    border-radius: 6px; transition: all 0.15s; text-align: center;
+  }
+  .outcome-btn.selected { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+
+  .o-section-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; color: var(--ink3); margin-bottom: 10px; display: block; }
+  textarea.o-notes {
+    width: 100%; background: var(--bg); border: none; border-bottom: 1.5px solid var(--border3);
+    padding: 0 0 12px; color: var(--ink); font-family: Georgia, serif; font-size: 16px;
+    line-height: 1.6; resize: none; outline: none; min-height: 80px; transition: border-color 0.2s;
+  }
+  textarea.o-notes:focus { border-bottom-color: var(--ink); }
+  textarea.o-notes::placeholder { color: var(--muted); font-style: italic; }
+
+  .btn-restart {
+    align-self: flex-start; padding: 11px 24px; background: var(--accent); color: var(--accent-fg); border: none;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.04em; cursor: pointer; border-radius: 4px; transition: opacity 0.2s;
+  }
+  .btn-restart:active { opacity: 0.75; }
+  .restart-sub { font-size: 12px; color: var(--muted); margin-top: 8px; font-style: italic; font-family: Georgia, serif; }
 </style>
 </head>
 <body>
 
-<!-- INTRO -->
+<!-- SCREEN 1: INTRO -->
 <div id="screen-intro" class="screen active">
   <div class="intro-top">
     <div class="app-name">Weigh</div>
@@ -162,7 +223,7 @@
   </div>
 </div>
 
-<!-- ANALYSIS -->
+<!-- SCREEN 2: ANALYSIS -->
 <div id="screen-analysis" class="screen">
   <div class="a-header">
     <button class="btn-back" onclick="goBack()">← Back</button>
@@ -170,6 +231,7 @@
       <div class="a-eyebrow">Your Dilemma</div>
       <div class="a-dilemma" id="headerDilemma"></div>
     </div>
+    <button class="btn-decide" onclick="goToOutcome()">I've decided →</button>
   </div>
 
   <div class="tabs">
@@ -178,7 +240,6 @@
   </div>
 
   <div class="a-body">
-
     <!-- REVEAL -->
     <div class="panel active" id="panel-reveal">
       <div class="section-block">
@@ -252,6 +313,7 @@
     </div>
   </div>
 
+  <!-- VERDICT + TIPS BAR -->
   <div class="verdict-bar">
     <div class="balance-track">
       <div class="balance-fill" id="balanceFill" style="left:50%;width:0%"></div>
@@ -261,15 +323,80 @@
       <span class="verdict-text" id="verdictText">Add items to weigh</span>
       <span class="verdict-side">Conceal</span>
     </div>
+    <div class="tips-drawer" id="tipsDrawer">
+      <div class="tips-inner" id="tipsInner">
+        <!-- filled by JS -->
+      </div>
+    </div>
+    <div class="no-tips-pad" id="noTipsPad"></div>
+  </div>
+</div>
+
+<!-- SCREEN 3: OUTCOME -->
+<div id="screen-outcome" class="screen">
+  <div class="o-header">
+    <button class="btn-back" onclick="goToAnalysis()">← Back</button>
+    <div class="a-header-inner">
+      <div class="a-eyebrow">After the decision</div>
+      <div class="a-dilemma" id="outcomeHeaderDilemma"></div>
+    </div>
+  </div>
+  <div class="o-body">
+
+    <div class="o-decision-summary">
+      <div class="o-ds-label">The balance suggested</div>
+      <div class="o-ds-text" id="outcomeSummary">—</div>
+    </div>
+
+    <div>
+      <label class="o-section-label">What did you decide to do?</label>
+      <div class="outcome-choice-row">
+        <button class="outcome-btn" id="obtn-reveal" onclick="selectOutcome('reveal')">Reveal</button>
+        <button class="outcome-btn" id="obtn-conceal" onclick="selectOutcome('conceal')">Conceal</button>
+        <button class="outcome-btn" id="obtn-other" onclick="selectOutcome('other')">Other</button>
+      </div>
+    </div>
+
+    <div>
+      <label class="o-section-label" for="outcomeNotes">How did it go?</label>
+      <textarea id="outcomeNotes" class="o-notes" rows="5"
+        placeholder="What happened? How did you feel? Was the decision the right one?"></textarea>
+    </div>
+
+    <div>
+      <button class="btn-restart" onclick="restart()">Start a new dilemma →</button>
+      <div class="restart-sub">This will clear all current entries.</div>
+    </div>
+
   </div>
 </div>
 
 <script>
-  // Each item: { text, weight } where weight = 1 (Low), 2 (Med), 3 (High)
-  const items = { 'reveal-pro':[], 'reveal-con':[], 'conceal-pro':[], 'conceal-con':[] };
   const WEIGHTS = { low: 1, med: 2, high: 3 };
   const LABELS = ['Low', 'Med', 'High'];
   const KEYS_W = ['low', 'med', 'high'];
+  const items = { 'reveal-pro':[], 'reveal-con':[], 'conceal-pro':[], 'conceal-con':[] };
+
+  const TIPS = {
+    reveal: [
+      'Choose the right moment — timing and privacy matter as much as the words.',
+      'Lead with your intention: explain why you\'re sharing, not just what you\'re sharing.',
+      'Be prepared for a reaction you didn\'t expect — give the other person space to process.',
+      'You don\'t have to disclose everything at once. Start with what feels safe.',
+    ],
+    conceal: [
+      'Holding back is a valid choice — but check that it\'s a decision, not avoidance.',
+      'Find another outlet for what you\'re carrying: a journal, a trusted friend outside the situation.',
+      'Set a review date with yourself — revisit whether silence still feels right in a month.',
+      'Concealing something doesn\'t mean the issue disappears; consider addressing the root cause another way.',
+    ],
+    balanced: [
+      'When it\'s this close, your gut often knows more than the list does.',
+      'Talk it through with someone you trust before committing either way.',
+    ]
+  };
+
+  let lastVerdict = null;
 
   const dilemmaInput = document.getElementById('dilemmaInput');
   const beginBtn = document.getElementById('beginBtn');
@@ -277,16 +404,57 @@
     beginBtn.disabled = dilemmaInput.value.trim().length < 5;
   });
 
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
   function beginAnalysis() {
-    document.getElementById('headerDilemma').textContent = dilemmaInput.value.trim();
-    document.getElementById('screen-intro').classList.remove('active');
-    document.getElementById('screen-analysis').classList.add('active');
+    const txt = dilemmaInput.value.trim();
+    document.getElementById('headerDilemma').textContent = txt;
+    document.getElementById('outcomeHeaderDilemma').textContent = txt;
+    show('screen-analysis');
     updateBalance();
   }
 
-  function goBack() {
-    document.getElementById('screen-analysis').classList.remove('active');
-    document.getElementById('screen-intro').classList.add('active');
+  function goBack() { show('screen-intro'); }
+  function goToAnalysis() { show('screen-analysis'); }
+
+  function goToOutcome() {
+    const rp = scoreOf('reveal-pro'), rc = scoreOf('reveal-con');
+    const cp = scoreOf('conceal-pro'), cc = scoreOf('conceal-con');
+    const revScore = rp + cc, conScore = cp + rc;
+    let summaryText;
+    if (!revScore && !conScore) summaryText = 'No items added yet.';
+    else if (revScore > conScore) summaryText = 'Reveal — the evidence leaned toward speaking up.';
+    else if (conScore > revScore) summaryText = 'Conceal — the evidence leaned toward holding back.';
+    else summaryText = 'Evenly balanced — no clear lean either way.';
+    document.getElementById('outcomeSummary').textContent = summaryText;
+    // reset outcome choices
+    ['reveal','conceal','other'].forEach(o => document.getElementById('obtn-'+o).classList.remove('selected'));
+    show('screen-outcome');
+  }
+
+  function selectOutcome(choice) {
+    ['reveal','conceal','other'].forEach(o => document.getElementById('obtn-'+o).classList.remove('selected'));
+    document.getElementById('obtn-'+choice).classList.add('selected');
+  }
+
+  function restart() {
+    // clear all state
+    Object.keys(items).forEach(k => items[k] = []);
+    ['reveal-pro','reveal-con','conceal-pro','conceal-con'].forEach(k => {
+      document.getElementById('list-'+k).innerHTML = '';
+      document.getElementById('input-'+k).value = '';
+    });
+    document.getElementById('dilemmaInput').value = '';
+    document.getElementById('outcomeNotes').value = '';
+    document.querySelectorAll('textarea.notes').forEach(t => t.value = '');
+    ['reveal','conceal','other'].forEach(o => document.getElementById('obtn-'+o).classList.remove('selected'));
+    beginBtn.disabled = true;
+    lastVerdict = null;
+    updateBalance();
+    show('screen-intro');
   }
 
   function switchTab(tab) {
@@ -304,7 +472,7 @@
     const input = document.getElementById('input-'+key);
     const text = input.value.trim();
     if (!text) return;
-    items[key].push({ text, weight: 'med' }); // default Med
+    items[key].push({ text, weight: 'med' });
     input.value = '';
     renderList(key);
     updateBalance();
@@ -329,8 +497,8 @@
       const li = document.createElement('li');
       li.className = 'item-chip';
       const pillsHtml = KEYS_W.map((w, wi) => {
-        const activeClass = item.weight === w ? `active-${w}` : '';
-        return `<button class="weight-btn ${activeClass}" onclick="setWeight('${key}',${i},'${w}')">${LABELS[wi]}</button>`;
+        const cls = item.weight === w ? `active-${w}` : '';
+        return `<button class="weight-btn ${cls}" onclick="setWeight('${key}',${i},'${w}')">${LABELS[wi]}</button>`;
       }).join('');
       li.innerHTML = `
         <span class="item-dash">—</span>
@@ -343,25 +511,51 @@
   }
 
   function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  function scoreOf(key) {
-    return items[key].reduce((sum, item) => sum + WEIGHTS[item.weight], 0);
-  }
+  function scoreOf(key) { return items[key].reduce((s, item) => s + WEIGHTS[item.weight], 0); }
 
   function updateBalance() {
     const rp = scoreOf('reveal-pro'), rc = scoreOf('reveal-con');
     const cp = scoreOf('conceal-pro'), cc = scoreOf('conceal-con');
-    // reveal score = its pros + conceal cons; conceal score = its pros + reveal cons
     const revScore = rp + cc, conScore = cp + rc, total = revScore + conScore;
     const fill = document.getElementById('balanceFill');
     const verdict = document.getElementById('verdictText');
-    if (!total) { fill.style.left='50%'; fill.style.width='0%'; verdict.textContent='Add items to weigh'; return; }
-    if (revScore > conScore) {
-      fill.style.left='0%'; fill.style.width=(revScore/total*100)+'%'; verdict.textContent='Leans Reveal';
+    const drawer = document.getElementById('tipsDrawer');
+    const tipsInner = document.getElementById('tipsInner');
+    const noTipsPad = document.getElementById('noTipsPad');
+
+    let newVerdict = null;
+    if (!total) {
+      fill.style.left='50%'; fill.style.width='0%';
+      verdict.textContent = 'Add items to weigh';
+    } else if (revScore > conScore) {
+      fill.style.left='0%'; fill.style.width=(revScore/total*100)+'%';
+      verdict.textContent = 'Leans Reveal';
+      newVerdict = 'reveal';
     } else if (conScore > revScore) {
-      const p=conScore/total*100; fill.style.left=(100-p)+'%'; fill.style.width=p+'%'; verdict.textContent='Leans Conceal';
+      const p = conScore/total*100;
+      fill.style.left=(100-p)+'%'; fill.style.width=p+'%';
+      verdict.textContent = 'Leans Conceal';
+      newVerdict = 'conceal';
     } else {
-      fill.style.left='25%'; fill.style.width='50%'; verdict.textContent='Evenly Balanced';
+      fill.style.left='25%'; fill.style.width='50%';
+      verdict.textContent = 'Evenly Balanced';
+      newVerdict = 'balanced';
+    }
+
+    // update tips only when verdict changes
+    if (newVerdict !== lastVerdict) {
+      lastVerdict = newVerdict;
+      if (newVerdict) {
+        const tipList = TIPS[newVerdict];
+        tipsInner.innerHTML = `<div class="tips-heading">Tips if you ${newVerdict === 'balanced' ? 'are undecided' : (newVerdict === 'reveal' ? 'choose to reveal' : 'choose to conceal')}</div>`
+          + tipList.map(t => `<div class="tip-item"><span class="tip-dot">—</span><span class="tip-text">${t}</span></div>`).join('')
+          + `<button class="tips-cta" onclick="goToOutcome()">I've decided →</button>`;
+        drawer.classList.add('open');
+        noTipsPad.style.display = 'none';
+      } else {
+        drawer.classList.remove('open');
+        noTipsPad.style.display = 'block';
+      }
     }
   }
 </script>
